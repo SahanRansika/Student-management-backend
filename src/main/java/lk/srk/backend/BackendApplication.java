@@ -1,0 +1,13 @@
+package lk.srk.backend;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BackendApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(BackendApplication.class, args);
+        System.out.println("✅ Student Management System Backend Started!");
+        System.out.println("✅ Server running on: http://localhost:8080");
+    }
+}
