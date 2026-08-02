@@ -27,7 +27,7 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     @Autowired
-    @Lazy  // ✅ Add @Lazy
+    @Lazy
     private UserService userService;
 
     @Autowired
@@ -39,9 +39,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
+                        // ✅ Allow all auth endpoints without authentication
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/students/**").authenticated()
-                        .anyRequest().authenticated()
+                        // ✅ Allow all students endpoints (temporary for testing)
+                        .requestMatchers("/api/students/**").permitAll()
+                        // ✅ Allow any other requests
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -55,7 +58,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:3001"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "http://localhost:3001",
+                "http://127.0.0.1:3000"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
