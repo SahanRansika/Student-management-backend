@@ -45,9 +45,11 @@ public class StudentController {
     @PostMapping
     public ResponseEntity<?> createStudent(@RequestBody Student student) {
         try {
+            System.out.println("📝 Creating student: " + student.getStudentId());
             Student createdStudent = studentService.createStudent(student);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
         } catch (Exception e) {
+            System.err.println("❌ Student creation error: " + e.getMessage());
             Map<String, String> error = new HashMap<>();
             error.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(error);

@@ -32,16 +32,16 @@ public class Student {
     private String address;
     private LocalDateTime registrationDate;
 
-    public Student(String studentId, String fullName, String email, String phoneNumber,
+    public Student(String fullName, String email, String phoneNumber,
                    String course, Integer age, String gender, String address) {
-        this.studentId = studentId;
-        this.fullName = fullName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.course = course;
+        // studentId will be auto-generated
+        this.fullName = fullName != null ? fullName.trim() : null;
+        this.email = email != null ? email.trim() : null;
+        this.phoneNumber = phoneNumber != null ? phoneNumber.trim() : null;
+        this.course = course != null ? course.trim() : null;
         this.age = age;
         this.gender = gender;
-        this.address = address;
+        this.address = address != null ? address.trim() : null;
         this.registrationDate = LocalDateTime.now();
     }
 }
